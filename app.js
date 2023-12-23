@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 });
 
 
-
+ 
 app.post('/api/stars', (req, res, next) => {
   delete req.body._id;
   const star = new Star({
@@ -38,7 +38,7 @@ app.use('/api/stars', (req, res, next) => {
     .then(stars => res.status(200).json(stars))
     .catch(error => res.status(400).json({ error }));
     next();
-    
+
 });
 
 
