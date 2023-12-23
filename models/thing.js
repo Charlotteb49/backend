@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const starSchema = mongoose.Schema({
+const thingSchema = mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
   
 });
 
-module.exports = mongoose.model('star', starSchema);
+module.exports = mongoose.model('thing', thingSchema);
