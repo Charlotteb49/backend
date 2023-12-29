@@ -4,9 +4,9 @@ const router = express.Router();
 const starCtrl = require('../controllers/stars')
 
 
-router.post('/', auth, starCtrl.createThing);
-router.get('/', auth, starCtrl.getAllThing);
-router.delete('/:id', auth,  starCtrl.deleteThing);
+router.post('/', starCtrl.createThing);
+router.get('/', starCtrl.getAllThing);
+router.delete('/:id',  starCtrl.deleteThing);
 
 
 
