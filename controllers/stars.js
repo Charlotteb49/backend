@@ -28,7 +28,7 @@ exports.createThing = (req, res, next) => {
 
   
     exports.getAllThingByUser = (req, res, next) => {
-      Thing.find({user:req.params.username})
+      Thing.find({user:req.params.user})
       .then(things => res.status(200).json(things))
       .catch(error => res.status(400).json({ error }));
       };
