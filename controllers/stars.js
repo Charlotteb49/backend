@@ -25,4 +25,11 @@ exports.createThing = (req, res, next) => {
     .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
         .catch(error => res.status(400).json({ error }));
     };
+
+  
+    exports.getAllThingByUser = (req, res, next) => {
+      Thing.find({user:req.params.username})
+      .then(things => res.status(200).json(things))
+      .catch(error => res.status(400).json({ error }));
+      };
   
