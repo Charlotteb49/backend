@@ -49,7 +49,8 @@ exports.login = (req, res, next ) => {
                             {userId: user._id},
                             'RANDOM_TOKEN_SECRET',
                             { expiresIn: '24h'}
-                        )
+                        ),
+                        user,
                     })
                 }
 
@@ -65,32 +66,10 @@ exports.login = (req, res, next ) => {
 
 
 exports.getAuthenticatedUser = (req, res, next) => {
-  // Assuming the user's ID is included in the request headers or token payload
-  const token = req.headers.authorization; // Assuming the token is in the 'Authorization' header
+  User.findOne({_id:req.params.id})
+  .then(user => res.status(200).json(user))
+  .catch(error => res.status(400).json({ error }))
 
-  // Check if a token is present
-  if (!token) {
-    return res.status(401).json({ message: 'No token provided' });
-  }
-
-  // Verify and decode the token to get the user's ID
-  jwt.verify(token, 'YOUR_SECRET_KEY', (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: 'Invalid token' });
-    }
-
-    const userId = decoded.userId; // Extracted user ID from the decoded token
-
-    // Fetch the user's information based on the extracted user ID
-    User.findById(userId)
-      .then(user => {
-        if (!user) {
-          return res.status(404).json({ message: 'User not found' });
-        }
-        res.status(200).json(user);
-      })
-      .catch(error => res.status(500).json({ error }));
-  });
 };
 
 

@@ -5,8 +5,8 @@ const starCtrl = require('../controllers/stars')
 
 
 router.post('/', starCtrl.createThing);
-router.get('/', starCtrl.getAllThing);
-router.delete('/:id',  starCtrl.deleteThing);
+router.get('/',  starCtrl.getAllThing);
+router.delete('/:id', starCtrl.deleteThing);
 router.get('/:user', starCtrl.getAllThingByUser)
 
 
