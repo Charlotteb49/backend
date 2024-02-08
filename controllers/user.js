@@ -1,34 +1,42 @@
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
-
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-exports.signup = (req, res, next ) => {
-bcrypt.hash(req.body.password, 10)
-.then(hash => {
-    const user = new User({
+exports.signup = (req, res, next) => {
+  bcrypt.hash(req.body.password, 10)
+    .then(hash => {
+        const user = new User({
         email: req.body.email,
         password: hash,
         name: req.body.name,
         family_name: req.body.family_name,
-        username: req.body.username
+        username: req.body.username,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+      });
+
+      console.log('New user data:', user);
+
+      user.save()
+        .then(() => {
+          console.log('User saved successfully');
+          res.status(201).json({ message: 'Utilisateur créé' });
+        })
+        .catch(error => {
+          if (error.code === 11000) {
+            console.log('Duplicate key error:', error);
+            res.status(400).json({ message: 'ERROR 11000 with indexes on MONGODB' });
+          } else {
+            console.error('Error saving user:', error);
+            res.status(400).json({ error });
+          }
+        });
     })
-    
-    user.save()
-  .then(() => res.status(201).json({ message: 'Utilisateur créé' }))
-  .catch(error => {
-    if (error.code === 11000) {
-      // Handle duplicate key error (e.g., for unique fields like email or username)
-      res.status(400).json({ message: 'ERROR 11000 with indexes on MONGODB' });
-    } else {
-      // Handle other errors
-      console.error('Error saving user:', error);
-      res.status(400).json({ error });
-    }
-  });
-})
-.catch(error => res.status(500).json({error}))
+    .catch(error => {
+      console.error('Error hashing password:', error);
+      res.status(500).json({ error });
+    });
 };
+
 
 exports.login = (req, res, next ) => {
     User.findOne({email: req.body.email

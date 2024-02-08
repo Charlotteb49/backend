@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const starsRoutes = require('./routes/stars');
 const userRoutes = require('./routes/user');
+const path = require('path');
 
 mongoose.connect('mongodb+srv://bouyercharlotte2:carotte1234@cluster0.jwayhdw.mongodb.net/?retryWrites=true&w=majority',
 { useNewUrlParser: true, 
@@ -20,8 +21,9 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-app.use('/api/stars', starsRoutes)
-app.use('/api/auth', userRoutes)
+app.use('/api/stars', starsRoutes);
+app.use('/api/auth', userRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
  
 
 
