@@ -7,7 +7,9 @@ const userSchema = mongoose.Schema({
     name: { type: String, required: true},
     family_name: { type: String, required: true}, 
     username: { type: String, required: true, unique: true},
-    imageUrl: {type: String}
+    imageUrl: {type: String}, 
+    admin: {type: Boolean},
+    score: {type: Number}
 
 
 });

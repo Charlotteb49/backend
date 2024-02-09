@@ -11,7 +11,9 @@ exports.signup = (req, res, next) => {
         name: req.body.name,
         family_name: req.body.family_name,
         username: req.body.username,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        admin: req.body.admin === "chapeau" ? true : false,
+        score: req.body.score
       });
 
       console.log('New user data:', user);
