@@ -8,6 +8,7 @@ router.post('/', starCtrl.createThing);
 router.get('/',  starCtrl.getAllThing);
 router.delete('/:id', starCtrl.deleteThing);
 router.get('/:user', starCtrl.getAllThingByUser)
+router.patch('/:id', starCtrl.updateOneThing)
 
 
 
