@@ -13,7 +13,7 @@ exports.signup = (req, res, next) => {
         username: req.body.username,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
         admin: req.body.admin === "chapeau" ? true : false,
-        score: req.body.score
+        score: req.body.score 
       });
 
       console.log('New user data:', user);
