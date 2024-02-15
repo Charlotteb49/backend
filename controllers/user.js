@@ -13,7 +13,7 @@ exports.signup = (req, res, next) => {
         username: req.body.username,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
         admin: req.body.admin === "chapeau" ? true : false,
-        score: req.body.score 
+        score: 0
       });
 
       console.log('New user data:', user);
@@ -82,9 +82,21 @@ exports.getAuthenticatedUser = (req, res, next) => {
 
 };
 
+exports.getUser = (req, res, next) => {
+  User.findOne({username:req.params.username})
+  .then(user => res.status(200).json(user))
+  .catch(error => res.status(400).json({ error }))
+
+};
 
 exports.getAllUsers= (req, res, next) => {
     User.find()
     .then(users => res.status(200).json(users))
+    .catch(error => res.status(400).json({ error }));
+};
+
+exports.updateOneUser = (req, res, next) => {
+  User.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+    .then(() => res.status(200).json({ message: 'Objet modifié !'}))
     .catch(error => res.status(400).json({ error }));
 };
